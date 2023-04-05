@@ -1,0 +1,38 @@
+"""The program is to keep track of your mood through out the day. Day is divided into three section, morning, day and evening. 
+Mention how you felt, it will give you the overall review based on the three parts. 
+STILL WORKING ON IT what kind of activities you did, reflection towards your thought, attitude and so on"""
+for_positive = 0
+for_negative= 0
+journal_note = ""
+def question():
+    feel = input("Tell me, how did you feel? ")
+    global journal_note
+    journal_note += feel + ", "
+    feel1 = input("Would you consider it as a positive or Negative(P/N): ")
+    if feel1.upper() == 'P':
+        global for_positive
+        for_positive += 1
+        print(f"Brilliant!! You choose to remain calm and positive.")
+        return day_time
+    else:
+        global for_negative
+        for_negative +=1
+        print(f"Just take a deep breath. Remember you are not your though, not your anxiety. Your past doesn't define you!")
+        return day_time
+
+#asking the user for in input for the particular time 
+def day_time(x):
+    while 0 <x:
+        user = input("Which part of the day(M/D/E)? ")
+        if user.upper() == 'M' or user.upper() == 'D' or user.upper() == 'E':
+            x -=1
+            followup = question()
+        else:
+            print("Wrong input. Use M/D/E initial.")
+    print(f"Your journal for today, you felt {journal_note}")
+    if for_positive > for_negative:
+        print("Overall you had a positive day.")
+    else:
+        print(f"According to your journal, you had {for_positive} positive and {for_negative} negative mood.")
+day_time(3)
+
