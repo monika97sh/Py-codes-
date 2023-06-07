@@ -1,0 +1,130 @@
+import pwinput #replacing the value with different sign. 
+import os 
+import time 
+
+def clear():# use to clear the code
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+#def file():
+def start():
+    clear()
+    threetries = 3
+    pin = "1234"
+    while threetries > 0:
+        print("Enter your pin:",end="")
+        code = pwinput.pwinput(prompt="", mask="*")
+        if code.isnumeric() and code == pin:
+            print("Please wait.....")
+            time.sleep(2) #waits for 2 seconds before displaying
+            inside = middle() 
+        else: 
+            if threetries == 1:
+                print("Wrong pin. Too many attemps.")
+                time.sleep(3)
+                reset = morethan_3_tires()
+                pin = reset
+                #print(pin)
+                threetries = 3
+                continue
+            print("Wrong pin, Try again.", threetries)
+            threetries -= 1
+def morethan_3_tires():
+    from_user = input("Would you like to reset your pin(Y/N):")
+    clear()
+    if from_user.upper() == "Y":
+        while True:
+            print("Enter your new pin:",end="")
+            new_code = pwinput.pwinput(prompt="", mask="*")
+            if len(str(new_code)) == 4 and new_code.isnumeric():
+                print((20*"¨"),"\nConfirm your pin:",end="")
+                new_code_again = pwinput.pwinput(prompt="", mask="*")
+                print("Verifying..")
+                time.sleep(2)
+                clear()
+                if new_code == new_code_again:
+                    print("Pin has been successfully changed .")
+                    return new_code
+                else:
+                    print("Pin is incorrect. Start again.")
+            else:
+                print("Should be 4 digit number.")
+    else: 
+        end()
+
+def deposit(balance):
+    cash = int(input("Enter the amount you want to deposit: "))
+    total = balance + cash
+    print("Current balance:",balance,"\nNew deposit:",cash, "\n-------------------\nNew balance:",total)
+    return total
+def withdraw(balance):
+    print("Current balance:", balance)
+    count = 0
+    while True:
+        cash = int(input("Enter the amount you want to withdraw: "))
+        total = balance - cash
+        if cash <= balance:
+            total = balance - cash
+            time.sleep(3)
+            print("Current balance:",balance,"\nNew deposit:",cash, "\n-------------------\nNew balance:",total)
+            return total
+        elif cash > balance or count > 1:
+            print("You don't have sufficient balance. Please contact your bank.")
+            count += 1
+            if count == 1:
+                exit = input("OR Press C to cancel or anything to continue the process:")
+                clear()
+                if exit == "C":
+                    end()
+                else:
+                    continue
+             
+def middle():
+    clear()
+    balance = 5000
+    while True:
+        for i in range(0,3):
+            if i == 1:
+                print("** 1.Deposit   3.Withdraw ** \n** 2.Balance   4.Exit     **")
+            else:
+                print("****************************")
+        second_option= int(input("CHOOSE YOUR OPTION: "))
+        if second_option == 1:
+            clear()
+            print(f"{20*'#'}\n##{'Deposite'.center(16,' ')}##\n{20*'#'}")
+            deposit_money = deposit(balance)
+            balance = deposit_money
+            #print(balance)
+        elif second_option ==2:
+            clear()
+            exact_time = time.strftime("%X %x")
+            print("Your current balance is:",balance,"Time and Date:",exact_time)
+        elif second_option == 3:
+            clear()
+            print(f"{20*'#'}\n##{'Withdraw'.center(16,' ')}##\n{20*'#'}")
+            forwithdraw = withdraw(balance)
+            balance = forwithdraw
+        else:
+            exit()
+def end():
+    clear()
+    print("Thank you...")
+    time.sleep(3)
+    main()
+def main():
+    clear()
+    for i in range(0,3):
+        if i == 1:
+            txt = {"1.Start", "2.Cancel"}
+            for p in txt:
+                print("**",p.center(14," "),"**")
+        else:
+            print(20*"*")
+    user = int(input("Choose your option: "))
+    if user == 1:
+        for_start = start()
+    elif user == 2:
+        toend = end()
+        
+main()
+    
+    
